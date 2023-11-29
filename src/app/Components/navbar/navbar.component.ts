@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  @Input() sidebarShow: boolean = true;
+
   constructor(
     private router: Router,
   ) { }
@@ -15,5 +17,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  ShowHide(event:any){
+    if(event){
+      event.stopPropagation();
+      this.sidebarShow = !this.sidebarShow;
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { cartItemsService } from './../cart-items.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CartItemsComponent implements OnInit, OnDestroy {
 
+  @Output() sidebarShow = new EventEmitter<boolean>();
   cartItems:any;
   discount = Math.floor(Math.random() * 100);
   aspectdiscount = Math.floor(Math.random() * 1000);
@@ -28,10 +29,10 @@ export class CartItemsComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.params.subscribe(params => {
       this.elementContent = params['element'];
       this.Condition(this.elementContent);
+      this.OnDataLoad();
     })
-    this.OnDataLoad();
-
     console.log("discount Label: ", this.aspectdiscount)
+    console.log(this.sidebarShow.emit());
   }
 
   Condition(elements: any) {
@@ -54,7 +55,7 @@ export class CartItemsComponent implements OnInit, OnDestroy {
 }
 
   OnDataLoad(){
-    this.cartItemsService.getProductItems({types: 'products', Count: this.elementValue}).subscribe(
+    this.cartItemsService.getProductItems({Count: this.elementValue}).subscribe(
       (data:any) => {
         console.log(data);
         this.cartItems = data;
