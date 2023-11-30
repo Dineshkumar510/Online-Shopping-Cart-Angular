@@ -19,6 +19,7 @@ export class CartItemsComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
   elementContent: any;
   elementValue: any;
+  AddedcartItems: [] = [];
 
   constructor(
     private cartItemsService: cartItemsService,
@@ -61,6 +62,11 @@ export class CartItemsComponent implements OnInit, OnDestroy {
         this.cartItems = data;
       }
     )
+  }
+
+  addedToCart(event:any){
+    const AddCartItem = localStorage.setItem("cartItems", JSON.stringify(event));
+    //this.AddedcartItems.push(AddCartItem);
   }
 
 

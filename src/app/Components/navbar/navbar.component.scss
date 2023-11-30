@@ -55,6 +55,7 @@
   -moz-transform: translateX(234%);
   -ms-transform: translateX(234%);
   -o-transform: translateX(234%);
+  z-index: 1;
 }
 
 .sidebar-slider.sidebar-slide-in {
@@ -100,6 +101,10 @@
   margin: 12px;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
 
 .cart-name{
   display: flex;
@@ -113,6 +118,9 @@
   gap: 5px;
   margin: 20% 9%;
   justify-content: center;
+  max-height: 85%;
+  overflow-x: auto !important;
+  width: 89%;
 }
 
 .card {
@@ -341,6 +349,11 @@
   transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
 }
 
+.header{
+  position: absolute;
+  top: 2.5%;
+  right: 31%;
+}
 
 
 

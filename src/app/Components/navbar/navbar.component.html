@@ -55,6 +55,9 @@
           <i class="fa fa-times"></i>
       </span>
   </div>
+  <div class="header">
+    <h5>Add to Cart - Items</h5>
+  </div>
   <!-- <div class="sidebar-content">
       <h2>Cart Items - list</h2>
       <div class="Cart-Items">
@@ -71,7 +74,7 @@
 
   <div class="master-container">
 
-    <div class="card cart">
+    <div class="card cart" [ngStyle]="{'opacity': counter == 0 && prizeTag == 0 ? '0.5' : '1'}">
       <!-- <label class="title">Your cart</label> -->
       <div class="products">
         <div class="product">
@@ -80,19 +83,19 @@
             <span class="product">New Product for Cat Lovers</span>
           </div>
           <div class="quantity">
-            <button>
+            <button (click)="minus()" [disabled]="counter == 0">
               <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
               </svg>
             </button>
-            <label>2</label>
-            <button>
+            <label>{{counter}}</label>
+            <button (click)="plus()" [disabled]="counter == 10">
               <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
               </svg>
             </button>
           </div>
-          <label class="price small">₹230.99/-</label>
+          <label class="price small">₹{{prizeTag}}/-</label>
         </div>
       </div>
     </div>
