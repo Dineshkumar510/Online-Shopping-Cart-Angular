@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><i class="fa-solid fa-bag-shopping"></i> Shopping Mart</a>
+    <a class="navbar-brand" href=""><i class="fa-solid fa-bag-shopping"></i> Shopping Mart</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -31,7 +31,7 @@
         <li class="nav-item cart flex">
           <span class="nav-link white">
             <i class="fa-solid fa-cart-shopping" (click)="ShowHide($event)"></i>
-            <span class="count white ml-2">2</span>
+            <span class="count white ml-2">{{AddedtoCart.length}}</span>
           </span>
         </li>
         <li class="nav-item flex">
@@ -74,13 +74,14 @@
 
   <div class="master-container">
 
-    <div class="card cart" [ngStyle]="{'opacity': counter == 0 && prizeTag == 0 ? '0.5' : '1'}">
+    <div class="card cart" *ngFor="let item of AddedtoCart; let i = index;"
+    [ngStyle]="{'opacity': counter == 0 && item.price == 0 ? '0.5' : '1'}">
       <!-- <label class="title">Your cart</label> -->
       <div class="products">
         <div class="product">
-          <img class="img-src" src="https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.88847xw:1xh;center,top&resize=1200:*"/>
+          <img class="img-src" src="{{item.images[0]}}"/>
           <div class="cart-name">
-            <span class="product">New Product for Cat Lovers</span>
+            <span class="product">{{item.title}}</span>
           </div>
           <div class="quantity">
             <button (click)="minus()" [disabled]="counter == 0">
@@ -95,137 +96,7 @@
               </svg>
             </button>
           </div>
-          <label class="price small">₹{{prizeTag}}/-</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="card cart">
-      <!-- <label class="title">Your cart</label> -->
-      <div class="products">
-        <div class="product">
-          <img class="img-src" src="https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.88847xw:1xh;center,top&resize=1200:*"/>
-          <div class="cart-name">
-            <span class="product">New Product for Cat Lovers</span>
-          </div>
-          <div class="quantity">
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
-              </svg>
-            </button>
-            <label>2</label>
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
-              </svg>
-            </button>
-          </div>
-          <label class="price small">₹230.99/-</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="card cart">
-      <!-- <label class="title">Your cart</label> -->
-      <div class="products">
-        <div class="product">
-          <img class="img-src" src="https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.88847xw:1xh;center,top&resize=1200:*"/>
-          <div class="cart-name">
-            <span class="product">New Product for Cat Lovers</span>
-          </div>
-          <div class="quantity">
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
-              </svg>
-            </button>
-            <label>2</label>
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
-              </svg>
-            </button>
-          </div>
-          <label class="price small">₹230.99/-</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="card cart">
-      <!-- <label class="title">Your cart</label> -->
-      <div class="products">
-        <div class="product">
-          <img class="img-src" src="https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.88847xw:1xh;center,top&resize=1200:*"/>
-          <div class="cart-name">
-            <span class="product">New Product for Cat Lovers</span>
-          </div>
-          <div class="quantity">
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
-              </svg>
-            </button>
-            <label>2</label>
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
-              </svg>
-            </button>
-          </div>
-          <label class="price small">₹230.99/-</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="card cart">
-      <!-- <label class="title">Your cart</label> -->
-      <div class="products">
-        <div class="product">
-          <img class="img-src" src="https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.88847xw:1xh;center,top&resize=1200:*"/>
-          <div class="cart-name">
-            <span class="product">New Product for Cat Lovers</span>
-          </div>
-          <div class="quantity">
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
-              </svg>
-            </button>
-            <label>2</label>
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
-              </svg>
-            </button>
-          </div>
-          <label class="price small">₹230.99/-</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="card cart">
-      <!-- <label class="title">Your cart</label> -->
-      <div class="products">
-        <div class="product">
-          <img class="img-src" src="https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.88847xw:1xh;center,top&resize=1200:*"/>
-          <div class="cart-name">
-            <span class="product">New Product for Cat Lovers</span>
-          </div>
-          <div class="quantity">
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
-              </svg>
-            </button>
-            <label>2</label>
-            <button>
-              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
-              </svg>
-            </button>
-          </div>
-          <label class="price small">₹230.99/-</label>
+          <label class="price small">₹{{item.price}}/-</label>
         </div>
       </div>
     </div>
@@ -238,7 +109,7 @@
       </form>
     </div> -->
 
-    <div class="card checkout">
+    <div class="card checkout" *ngIf="AddedtoCart.length !==0">
       <label class="title">Checkout</label>
       <div class="details">
         <span>Your cart subtotal:</span>
@@ -256,5 +127,6 @@
         </button>
       </div>
     </div>
+
   </div>
 </div>

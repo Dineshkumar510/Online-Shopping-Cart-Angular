@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { cartItemsService } from '../Services/cart-items.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,12 +13,15 @@ export class NavbarComponent implements OnInit {
 
   counter = 1;
   prizeTag = 200;
+  AddedtoCart:any[] = [];
 
   constructor(
     private router: Router,
+    private cartItemsService: cartItemsService,
   ) { }
 
   ngOnInit(): void {
+    this.OnCardItem();
   }
 
   ShowHide(event:any){
@@ -35,6 +39,10 @@ export class NavbarComponent implements OnInit {
   minus(){
     this.counter -= 1;
     this.prizeTag = this.prizeTag - this.prizeTag;
+  }
+
+  OnCardItem(){
+   this.AddedtoCart = this.cartItemsService.getCartItems();
   }
 
 }

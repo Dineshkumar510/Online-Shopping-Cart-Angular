@@ -1,15 +1,17 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CartItemsComponent } from './Components/cart-items/cart-items.component';
-import { cartItemsService } from './Components/cart-items.service';
+import { cartItemsService } from './Components/Services/cart-items.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NavbarComponent } from './Components/navbar/navbar.component';
+import { loaderComponent } from './Components/loader/loader.component';
 @NgModule({
   declarations: [
+    loaderComponent,
     AppComponent,
     CartItemsComponent,
     NavbarComponent,
@@ -19,6 +21,9 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [cartItemsService],
   bootstrap: [AppComponent]

@@ -36,9 +36,12 @@
             <div class="price">
               <span *ngIf="item.price > aspectdiscount">₹90.00</span> ₹{{item?.price}}/-
             </div>
-            <a class="add-to-cart" href="javascript:void(0)" (click)="addedToCart(item)">add to cart</a>
+            <a class="add-to-cart" (click)="addedToCart(item)">add to cart</a>
           </div>
         </div>
+      </div>
+      <div class="loading" *ngIf="loading">
+        <app-loader></app-loader>
       </div>
     </div>
   </div>

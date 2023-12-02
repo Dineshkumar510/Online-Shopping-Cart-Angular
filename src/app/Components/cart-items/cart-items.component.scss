@@ -165,6 +165,7 @@
 }
 .product-grid .add-to-cart:hover{
   background-color: #2f2f2f;
+  cursor: pointer;
 }
 .product-grid:hover .add-to-cart{
   opacity: 1;
@@ -207,4 +208,11 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #638505;
+}
+
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30rem;
 }

@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { cartItemsService } from './../cart-items.service';
+import { cartItemsService } from '../Services/cart-items.service';
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -11,19 +11,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CartItemsComponent implements OnInit, OnDestroy {
 
-  @Output() sidebarShow = new EventEmitter<boolean>();
   cartItems:any;
   discount = Math.floor(Math.random() * 100);
   aspectdiscount = Math.floor(Math.random() * 1000);
 
   private routeSub: Subscription;
   elementContent: any;
+  loading = false;
   elementValue: any;
-  AddedcartItems: [] = [];
 
   constructor(
     private cartItemsService: cartItemsService,
     private route: ActivatedRoute,
+
   ) {}
 
   ngOnInit(): void {
@@ -32,8 +32,6 @@ export class CartItemsComponent implements OnInit, OnDestroy {
       this.Condition(this.elementContent);
       this.OnDataLoad();
     })
-    console.log("discount Label: ", this.aspectdiscount)
-    console.log(this.sidebarShow.emit());
   }
 
   Condition(elements: any) {
@@ -56,6 +54,7 @@ export class CartItemsComponent implements OnInit, OnDestroy {
 }
 
   OnDataLoad(){
+    this.loading = true;
     this.cartItemsService.getProductItems({Count: this.elementValue}).subscribe(
       (data:any) => {
         console.log(data);
@@ -65,8 +64,7 @@ export class CartItemsComponent implements OnInit, OnDestroy {
   }
 
   addedToCart(event:any){
-    const AddCartItem = localStorage.setItem("cartItems", JSON.stringify(event));
-    //this.AddedcartItems.push(AddCartItem);
+   this.cartItemsService.AddtoCart(event);
   }
 
 
