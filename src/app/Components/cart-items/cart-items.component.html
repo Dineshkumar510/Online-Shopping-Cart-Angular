@@ -2,10 +2,10 @@
 <div class="container my-4">
   <div class="row">
       <div class="col-md-12 mb-3" *ngIf="elementContent == 'products'">
-            <h3>All {{elementContent}}</h3>
+            <h5>All {{elementContent | uppercase}}</h5>
       </div>
       <div class="col-md-12 mb-3" *ngIf="elementContent !== 'products'">
-        <h3>{{elementContent}}</h3>
+        <h5>{{elementContent | uppercase}}</h5>
   </div>
   </div>
 
@@ -15,7 +15,7 @@
         <div class="product-grid">
           <div class="product-image">
             <a href="#" class="image">
-                <img class="pic-1 img-thumbnail" src="{{item.images?.[0]}}">
+                <img class="pic-1 img-thumbnail" src="{{item.image}}">
             </a>
             <span class="product-discount-label" *ngIf="item.price > aspectdiscount">- {{discount}}%</span>
             <ul class="product-links">
@@ -25,7 +25,7 @@
             </ul>
           </div>
           <div class="product-content">
-            <ul class="rating">
+            <ul class="rating crop">
                 <li class="fas fa-star"></li>
                 <li class="fas fa-star"></li>
                 <li class="fas fa-star"></li>

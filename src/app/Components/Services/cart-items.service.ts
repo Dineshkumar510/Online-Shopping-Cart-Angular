@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
-import {ToastService} from '../Services/toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,24 +8,22 @@ import {ToastService} from '../Services/toast.service';
 
 export class cartItemsService {
 
-  private apiUrl = 'https://api.escuelajs.co/api/v1';
+  private apiUrl = 'https://fakestoreapi.com/products/category';
 
   AddedcartItems:any[] = [];
 
 
   constructor(
     private http: HttpClient,
-    private toast: ToastService,
     ) {}
 
-  getProductItems(params: {Count: Number}): Observable<any>{
-   const {Count} = params;
-   const url = `${this.apiUrl}/products/?categoryId=${Count}`
+  getProductItems(params: {category: any}): Observable<any>{
+   const {category} = params;
+   const url = `${this.apiUrl}/${category}`
    return this.http.get(url);
   }
 
   AddtoCart(items:any){
-    this.toast.openSuccess("Product added to cart");
     const AddCartItem:any = localStorage.setItem("cartItems", JSON.stringify(items));
     let ContentItem:any= localStorage.getItem("cartItems");
     const ItemArray = JSON.parse(ContentItem)

@@ -10,16 +10,16 @@
           <a class="nav-link white" aria-current="page" href="/products">All</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link white" href="/Electronics">Electronics</a>
+          <a class="nav-link white" href="/electronics">Electronics</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link white" href="/Clothes">Clothes</a>
+          <a class="nav-link white" href="/men's clothing">Clothes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link white" href="/Shoes">Shoes</a>
+          <a class="nav-link white" href="/women's clothing">Sarees</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link white" href="/Miscellaneous">Others</a>
+          <a class="nav-link white" href="/jewelery">Others</a>
         </li>
       </ul>
     </div>
@@ -58,19 +58,6 @@
   <div class="header">
     <h5>Add to Cart - Items</h5>
   </div>
-  <!-- <div class="sidebar-content">
-      <h2>Cart Items - list</h2>
-      <div class="Cart-Items">
-        <div class="img-content">
-            <img class="img-src" src="https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.88847xw:1xh;center,top&resize=1200:*"/>
-        </div>
-        <div class="product-name">
-          <span>New Product</span>
-        </div>
-      </div>
-      <div class="Cart-Items"></div>
-  </div> -->
-
 
   <div class="master-container">
 
@@ -79,7 +66,7 @@
       <!-- <label class="title">Your cart</label> -->
       <div class="products">
         <div class="product">
-          <img class="img-src" src="{{item.images[0]}}"/>
+          <img class="img-src" src="{{item.image}}"/>
           <div class="cart-name">
             <span class="product">{{item.title}}</span>
           </div>
@@ -125,6 +112,15 @@
         <button class="btn btn-primary" style="font-size: 14px; color:#fff">
          Pay Now
         </button>
+      </div>
+    </div>
+
+    <div class="noItemonCart"  *ngIf="AddedtoCart.length == 0">
+      <div class="empty-cart">
+        <img class="noItem" src="../../../assets/images/Empty Cart.jpg" alt="emptycart"/>
+      </div>
+      <div class="content" style="margin: 1.5rem 2.5rem;">
+        <h6><i>No Items in the Cart, Please add some Products</i></h6>
       </div>
     </div>
 

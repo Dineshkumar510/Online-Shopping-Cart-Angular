@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class CartItemsComponent implements OnInit, OnDestroy {
 
   cartItems:any;
+  starWidth: number = 0;
   discount = Math.floor(Math.random() * 100);
   aspectdiscount = Math.floor(Math.random() * 1000);
 
@@ -29,39 +30,46 @@ export class CartItemsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.elementContent = params['element'];
-      this.Condition(this.elementContent);
+      //this.Condition(this.elementContent);
       this.OnDataLoad();
     })
   }
 
-  Condition(elements: any) {
-    if (elements === "products") {
-      this.elementValue = 0;
-    }else if (elements === "Clothes") {
-      this.elementValue = 1;
-    } else if (elements === "Electronics") {
-      this.elementValue = 2;
-    } else if (elements === "Audi") {
-      this.elementValue = 3;
-    } else if (elements === "Shoes") {
-      this.elementValue = 4;
-    } else if (elements === "Miscellaneous") {
-      this.elementValue = 5;
-    } else {
-      this.elementValue = null;
-    }
-    return this.elementValue;
-}
-
-  OnDataLoad(){
-    this.loading = true;
-    this.cartItemsService.getProductItems({Count: this.elementValue}).subscribe(
-      (data:any) => {
-        console.log(data);
-        this.cartItems = data;
-      }
-    )
+  rateProduct(rateValue: number) {
+    this.starWidth = rateValue * 75 / 5;
   }
+
+//   Condition(elements: any) {
+//     if (elements === "products") {
+//       this.elementValue = 0;
+//     }else if (elements === "Clothes") {
+//       this.elementValue = 1;
+//     } else if (elements === "Electronics") {
+//       this.elementValue = 2;
+//     } else if (elements === "Audi") {
+//       this.elementValue = 3;
+//     } else if (elements === "Shoes") {
+//       this.elementValue = 4;
+//     } else if (elements === "Miscellaneous") {
+//       this.elementValue = 5;
+//     } else {
+//       this.elementValue = null;
+//     }
+//     return this.elementValue;
+// }
+
+async OnDataLoad() {
+  try {
+    this.loading = true;
+    const data: any = await this.cartItemsService.getProductItems({ category: this.elementContent }).toPromise();
+    console.log(data);
+    this.cartItems = data;
+  } catch (error) {
+    console.error("Error loading data:", error);
+  } finally {
+    this.loading = false;
+  }
+}
 
   addedToCart(event:any){
    this.cartItemsService.AddtoCart(event);

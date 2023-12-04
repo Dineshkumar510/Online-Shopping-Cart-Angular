@@ -19,7 +19,7 @@
 }
 .product-grid .product-image img{
   width: 50%;
-  height: auto;
+  height: 120px !important;
   margin-top: 1rem;
 }
 .product-grid .product-discount-label{
@@ -173,6 +173,10 @@
 }
 @media screen and (max-width:1200px){
   .product-grid{ margin: 0 0 30px; }
+}
+
+.crop {
+  overflow: hidden;
 }
 
 
