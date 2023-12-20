@@ -9,7 +9,6 @@
   </div>
   </div>
 
-  <div class="card card-default card-content">
     <div class="row">
       <div class="col-md-3 col-sm-6" *ngFor="let item of cartItems">
         <div class="product-grid">
@@ -32,11 +31,11 @@
                 <li class="far fa-star"></li>
                 <li class="far fa-star"></li>
             </ul>
-            <h3 class="title"><a href="#">{{item?.title}}</a></h3>
+            <h3 class="title"><a href="#">{{ item?.title.length > 20 ? item?.title.substring(0,20) + " ..." : item?.title }}</a></h3>
             <div class="price">
               <span *ngIf="item.price > aspectdiscount">₹90.00</span> ₹{{item?.price}}/-
             </div>
-            <a class="add-to-cart" (click)="addedToCart(item)">add to cart</a>
+            <button class="add-to-cart" (click)="addedToCart(item)">add to cart</button>
           </div>
         </div>
       </div>
@@ -44,7 +43,6 @@
         <app-loader></app-loader>
       </div>
     </div>
-  </div>
 
 
 </div>

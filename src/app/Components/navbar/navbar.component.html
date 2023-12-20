@@ -31,7 +31,7 @@
         <li class="nav-item cart flex">
           <span class="nav-link white">
             <i class="fa-solid fa-cart-shopping" (click)="ShowHide($event)"></i>
-            <span class="count white ml-2">{{AddedtoCart.length}}</span>
+            <span class="count white ml-2" *ngIf="TotalAddedtoCart.length >= 1">{{TotalAddedtoCart.length}}</span>
           </span>
         </li>
         <li class="nav-item flex">
@@ -61,29 +61,34 @@
 
   <div class="master-container">
 
-    <div class="card cart" *ngFor="let item of AddedtoCart; let i = index;"
-    [ngStyle]="{'opacity': counter == 0 && item.price == 0 ? '0.5' : '1'}">
+    <div class="card cart" *ngFor="let item of TotalAddedtoCart; let i = index;"
+    [ngStyle]="{'opacity': counter == 0 || item.price == 0 ? '0.4' : '1'}">
       <!-- <label class="title">Your cart</label> -->
       <div class="products">
+        <div class="cross">
+          <i class="fa fa-times" style="cursor: pointer;" (click)="removeEle(i)"></i>
+        </div>
         <div class="product">
           <img class="img-src" src="{{item.image}}"/>
           <div class="cart-name">
-            <span class="product">{{item.title}}</span>
+            <span class="product">{{ item.title.length > 20 ? item.title.substring(0,20)+"..." : item.title }}</span>
           </div>
           <div class="quantity">
-            <button (click)="minus()" [disabled]="counter == 0">
+            <button (click)="minus(item.id);" [disabled]="counter == 0">
               <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
               </svg>
             </button>
             <label>{{counter}}</label>
-            <button (click)="plus()" [disabled]="counter == 10">
+            <button (click)="plus(item.id)" [disabled]="counter == 5">
               <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
               </svg>
             </button>
           </div>
-          <label class="price small">₹{{item.price}}/-</label>
+          <div class="price-Tag">
+            <label class="price small" (click)="SinglePrice(item.price)">₹{{item.price}}/-</label>
+          </div>
         </div>
       </div>
     </div>
@@ -96,18 +101,18 @@
       </form>
     </div> -->
 
-    <div class="card checkout" *ngIf="AddedtoCart.length !==0">
+    <div class="card checkout" *ngIf="TotalAddedtoCart.length !== 0">
       <label class="title">Checkout</label>
       <div class="details">
         <span>Your cart subtotal:</span>
-        <span>47.99$</span>
+        <span>₹47.99/-</span>
         <span>Discount through applied coupons:</span>
-        <span>3.99$</span>
+        <span>₹3.99/-</span>
         <span>Shipping fees:</span>
-        <span>4.99$</span>
+        <span>₹4.99/-</span>
       </div>
       <div class="checkout--footer">
-        <label class="price"><sup>₹</sup>690/-</label>
+        <label class="price"><sup>₹</sup>{{totalPrice}}/-</label>
         <!-- <button class="checkout-btn">Checkout</button> -->
         <button class="btn btn-primary" style="font-size: 14px; color:#fff">
          Pay Now
@@ -115,7 +120,7 @@
       </div>
     </div>
 
-    <div class="noItemonCart"  *ngIf="AddedtoCart.length == 0">
+    <div class="noItemonCart" *ngIf="TotalAddedtoCart.length == 0">
       <div class="empty-cart">
         <img class="noItem" src="../../../assets/images/Empty Cart.jpg" alt="emptycart"/>
       </div>
