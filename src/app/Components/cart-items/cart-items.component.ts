@@ -80,4 +80,8 @@ async OnDataLoad() {
     this.routeSub.unsubscribe();
   }
 
+  get isSubMenuOpen(): boolean {
+    return this.cartItemsService.sidebarShow;
+  }
+
 }

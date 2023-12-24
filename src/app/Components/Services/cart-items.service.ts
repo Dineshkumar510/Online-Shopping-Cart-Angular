@@ -10,7 +10,8 @@ export class cartItemsService {
 
   private apiUrl = 'https://fakestoreapi.com/products/category';
 
-  AddedcartItems:any[] = [];
+  cartItems:any[] = [];
+  sidebarShow: boolean = true;
 
 
   constructor(
@@ -23,16 +24,20 @@ export class cartItemsService {
    return this.http.get(url);
   }
 
-  AddtoCart(items:any){
-    const AddCartItem:any = localStorage.setItem("cartItems", JSON.stringify(items));
+  AddtoCart(item:any){
+    const AddCartItem:any = localStorage.setItem("cartItems", JSON.stringify(item));
     let ContentItem:any= localStorage.getItem("cartItems");
     const ItemArray = JSON.parse(ContentItem)
-    this.AddedcartItems.push(ItemArray);
-    console.log(this.AddedcartItems);
+    this.cartItems.push(ItemArray);
+    console.log(this.cartItems);
   }
 
   getCartItems(){
-    return this.AddedcartItems;
+    return this.cartItems;
+  }
+
+  ShoppingCartToggle(){
+    this.sidebarShow = !this.sidebarShow;
   }
 
 }

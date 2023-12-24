@@ -1,3 +1,10 @@
+.blur {
+  filter: blur(4px);
+}
+
+.cursorNull {
+  cursor: not-allowed !important;
+}
 
 .product-grid{
   font-family: 'Poppins', sans-serif;
@@ -219,3 +226,5 @@
   align-items: center;
   min-height: 30rem;
 }
+
+

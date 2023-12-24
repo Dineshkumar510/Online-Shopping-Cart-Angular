@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { cartItemsService } from '../Services/cart-items.service';
 @Component({
@@ -6,9 +6,8 @@ import { cartItemsService } from '../Services/cart-items.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit, OnChanges {
+export class NavbarComponent implements OnInit {
 
-  @Input() sidebarShow: boolean = true;
   @ViewChild("priceTag") priceTag: ElementRef;
 
   counter = 1;
@@ -16,6 +15,10 @@ export class NavbarComponent implements OnInit, OnChanges {
   finalCart:any[] = [];
   elementPrice:any;
   totalPrice:any;
+  couponCodeBar:boolean = false;
+  couponValue:any = 0;
+  ShippingCharges:any = 0;
+  //sidebarShow: boolean;
 
   constructor(
     private router: Router,
@@ -25,33 +28,75 @@ export class NavbarComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.OnCardItem();
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.OnCardItem();
-  }
+
+  reloadPage() {
+    window.location.reload();
+ }
 
   OnCardItem(){
     this.TotalAddedtoCart = this.cartItemsService.getCartItems();
-    const uniqueSet = new Set(this.TotalAddedtoCart);
-    // Convert the Set back to an array
-    const uniqueArray = Array.from(uniqueSet);
-    this.finalCart = uniqueArray;
    }
 
 
-  ShowHide(event:any){
+  ShoppingCartToggle(event:any){
     if(event){
       event.stopPropagation();
-      this.sidebarShow = !this.sidebarShow;
+      this.cartItemsService.ShoppingCartToggle();
+    }
+    console.log("After Loaded!!",this.TotalAddedtoCart)
+  }
+
+  get isSubMenuOpen(): boolean {
+    return this.cartItemsService.sidebarShow;
+  }
+
+  get TotalCost(): number{
+    return this.Totalprice(this.TotalAddedtoCart);
+  }
+
+  Totalprice(array:any[]){
+    var totalCost = 0;
+    for(var i = 0; i < array.length; i++){
+      totalCost += array[i].price;
+    }
+    return Math.round(totalCost);
+  }
+
+  CouponCode(){
+    this.couponCodeBar = !this.couponCodeBar;
+    if(this.couponCodeBar == true && this.TotalCost >= 500){
+      this.couponValue = 100;
+    } else{
+      this.couponValue = 0;
     }
   }
 
-  plus(i:number){
-    const Values = this.TotalAddedtoCart.map((item) => {
-      if(item.id === i){
-        this.counter += 1;
-      this.updateTotalPrice();
-      }
-    });
+  ShippingFees(){
+    if(this.TotalCost >= 500){
+      this.ShippingCharges = 150;
+    } else{
+      this.ShippingCharges = 0;
+    }
+  }
+
+  get FinalPrice(): number{
+    this.ShippingFees();
+    return Math.round(this.TotalCost - this.couponValue + this.ShippingCharges);
+  }
+
+
+  // plus(i:number){
+  //   const Values = this.TotalAddedtoCart.map((item) => {
+  //     if(item.id === i){
+  //       this.counter += 1;
+  //     this.updateTotalPrice();
+  //     }
+  //   });
+  // }
+
+  plus(itemId: number): number {
+    const cartItem = this.TotalAddedtoCart.find(item => item.title === itemId);
+    return cartItem ? this.counter += 1 : 0;
   }
 
   updateTotalPrice() {
@@ -62,13 +107,9 @@ export class NavbarComponent implements OnInit, OnChanges {
     return this.elementPrice = e;
   }
 
-  minus(i:number){
-    const Values = this.TotalAddedtoCart.map((item) => {
-      if(item.id === i){
-        this.counter -= 1;
-      this.updateTotalPrice();
-      }
-    });
+  minus(itemId: number):number{
+    const cartItem = this.TotalAddedtoCart.find(item => item.title === itemId);
+    return cartItem ? this.counter -= 1 : 0;
   }
 
   removeEle(i:number){
