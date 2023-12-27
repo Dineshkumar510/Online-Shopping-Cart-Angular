@@ -39,42 +39,36 @@ export class CartItemsComponent implements OnInit, OnDestroy {
     this.starWidth = rateValue * 75 / 5;
   }
 
-//   Condition(elements: any) {
-//     if (elements === "products") {
-//       this.elementValue = 0;
-//     }else if (elements === "Clothes") {
-//       this.elementValue = 1;
-//     } else if (elements === "Electronics") {
-//       this.elementValue = 2;
-//     } else if (elements === "Audi") {
-//       this.elementValue = 3;
-//     } else if (elements === "Shoes") {
-//       this.elementValue = 4;
-//     } else if (elements === "Miscellaneous") {
-//       this.elementValue = 5;
-//     } else {
-//       this.elementValue = null;
-//     }
-//     return this.elementValue;
+// async OnDataLoad() {
+//   try {
+//     this.loading = true;
+//     const data: any = await this.cartItemsService.getProductItems({ category: this.elementContent }).toPromise();
+//     console.log(data);
+//     this.cartItems = data;
+//   } catch (error) {
+//     console.error("Error loading data:", error);
+//   } finally {
+//     this.loading = false;
+//   }
 // }
 
-async OnDataLoad() {
-  try {
-    this.loading = true;
-    const data: any = await this.cartItemsService.getProductItems({ category: this.elementContent }).toPromise();
-    console.log(data);
-    this.cartItems = data;
-  } catch (error) {
-    console.error("Error loading data:", error);
-  } finally {
-    this.loading = false;
-  }
+OnDataLoad(){
+  this.loading = true;
+  this.cartItemsService.getProductItems({ category: this.elementContent }).subscribe(
+    (response) => {
+      const data = response.map(
+        (item, index) => ({...item, count: 1})
+      )
+      console.log(data);
+      this.cartItems = data;
+    }
+  );
+  this.loading = false;
 }
 
   addedToCart(event:any){
    this.cartItemsService.AddtoCart(event);
   }
-
 
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();

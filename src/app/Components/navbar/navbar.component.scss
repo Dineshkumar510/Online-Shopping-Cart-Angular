@@ -62,13 +62,19 @@
   bottom: 0;
   background-color: #e5e5e5;
   transform: translateX(234%);
-  transition: ease-in-out 300ms transform;
+  transition: 400ms transform;
   width: 30%;
   -webkit-transform: translateX(234%);
   -moz-transform: translateX(234%);
   -ms-transform: translateX(234%);
   -o-transform: translateX(234%);
   z-index: 1;
+  border-left: 1px solid #a5a5a5;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  -webkit-transition: 400ms transform;
+  -moz-transition: 400ms transform;
+  -ms-transition: 400ms transform;
+  -o-transition: 400ms transform;
 }
 
 .sidebar-slider.sidebar-slide-in {

@@ -6,18 +6,21 @@ import { cartItemsService } from '../Services/cart-items.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit{
 
   @ViewChild("priceTag") priceTag: ElementRef;
 
   counter = 1;
   TotalAddedtoCart:any[] = [];
-  finalCart:any[] = [];
+  IncrementArray:any[] = [];
+  DecrementArray:any[] = [];
+  IncrementValue:any = 0;
+  DecrementValue:any = 0;
   elementPrice:any;
   totalPrice:any;
   couponCodeBar:boolean = false;
   couponValue:any = 0;
-  ShippingCharges:any = 0;
+  //ShippingCharges:any = 0;
   //sidebarShow: boolean;
 
   constructor(
@@ -34,7 +37,7 @@ export class NavbarComponent implements OnInit {
  }
 
   OnCardItem(){
-    this.TotalAddedtoCart = this.cartItemsService.getCartItems();
+    this.TotalAddedtoCart = this.cartItemsService.getCartItems;
    }
 
 
@@ -43,7 +46,6 @@ export class NavbarComponent implements OnInit {
       event.stopPropagation();
       this.cartItemsService.ShoppingCartToggle();
     }
-    console.log("After Loaded!!",this.TotalAddedtoCart)
   }
 
   get isSubMenuOpen(): boolean {
@@ -51,7 +53,7 @@ export class NavbarComponent implements OnInit {
   }
 
   get TotalCost(): number{
-    return this.Totalprice(this.TotalAddedtoCart);
+    return this.Totalprice(this.TotalAddedtoCart)
   }
 
   Totalprice(array:any[]){
@@ -62,6 +64,14 @@ export class NavbarComponent implements OnInit {
     return Math.round(totalCost);
   }
 
+  //Alternative method to get the total cost of products
+  // TotalPriceProduct(){
+  //   const TotalValue = this.TotalAddedtoCart.reduce((prev:any, curr:any)=>{
+  //     return prev + curr.price
+  //   },0)
+  //   return TotalValue;
+  // }
+
   CouponCode(){
     this.couponCodeBar = !this.couponCodeBar;
     if(this.couponCodeBar == true && this.TotalCost >= 500){
@@ -71,51 +81,62 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  ShippingFees(){
-    if(this.TotalCost >= 500){
-      this.ShippingCharges = 150;
-    } else{
-      this.ShippingCharges = 0;
+  // ShippingFees(){
+  //   if(this.TotalCost >= 500){
+  //     this.ShippingCharges = 150;
+  //   } else{
+  //     this.ShippingCharges = 0;
+  //   }
+  // }
+
+
+  get ShippingCharges():number {
+    return this.TotalCost<500 ? 0 : 150;
+  }
+
+  plus(index: number, item:any) {
+    this.cartItemsService.IncrementCount(index);
+    if(item){
+      this.IncrementArray.push(item);
+      return this.IncrementValues;
+      }
+    return 0;
+  }
+
+  get IncrementValues(){
+    return this.IncrementValue = this.IncrementArray.reduce((prev:any, curr:any)=>{
+      return prev + curr.price
+    },0)
+  }
+
+  minus(index: number, item: any): number {
+    this.cartItemsService.DecrementCount(index);
+    if (item) {
+      this.DecrementArray.push(item);
+      return this.DecrementValues;
     }
+    return 0;
+  }
+  get DecrementValues(): number {
+    return this.DecrementValue = this.DecrementArray.reduce((prev: any, curr: any) => {
+      return prev + curr.price;
+    }, 0);
   }
 
   get FinalPrice(): number{
-    this.ShippingFees();
-    return Math.round(this.TotalCost - this.couponValue + this.ShippingCharges);
+    return Math.round(this.TotalCost + this.ShippingCharges + this.IncrementValue - this.couponValue - this.DecrementValue);
   }
 
-
-  // plus(i:number){
-  //   const Values = this.TotalAddedtoCart.map((item) => {
-  //     if(item.id === i){
-  //       this.counter += 1;
-  //     this.updateTotalPrice();
-  //     }
-  //   });
-  // }
-
-  plus(itemId: number): number {
-    const cartItem = this.TotalAddedtoCart.find(item => item.title === itemId);
-    return cartItem ? this.counter += 1 : 0;
-  }
-
-  updateTotalPrice() {
-    this.totalPrice = this.counter * this.elementPrice;
-  }
-
-  SinglePrice(e:number){
-    return this.elementPrice = e;
-  }
-
-  minus(itemId: number):number{
-    const cartItem = this.TotalAddedtoCart.find(item => item.title === itemId);
-    return cartItem ? this.counter -= 1 : 0;
-  }
 
   removeEle(i:number){
     this.TotalAddedtoCart.splice(i, 1);
   }
 
+  removeElewithDelay(i:number){
+    setTimeout(()=>{
+      this.TotalAddedtoCart.splice(i, 1);
+    }, 1000)
+  }
 
 
 }

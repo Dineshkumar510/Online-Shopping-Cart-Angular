@@ -29,8 +29,8 @@
           <span class="white userName">dk6089567@gmail.com</span>
         </li>
         <li class="nav-item cart flex">
-          <span class="nav-link white">
-            <i class="fa-solid fa-cart-shopping" (click)="ShoppingCartToggle($event)"></i>
+          <span class="nav-link white" (click)="ShoppingCartToggle($event)" style="transition: 0.5s;">
+            <i class="fa-solid fa-cart-shopping"></i>
             <span class="count white ml-2" *ngIf="TotalAddedtoCart.length >= 1">{{TotalAddedtoCart.length}}</span>
           </span>
         </li>
@@ -62,7 +62,7 @@
   <div class="master-container">
 
     <div class="card cart" *ngFor="let item of TotalAddedtoCart; let i = index;"
-    [ngStyle]="{'opacity': counter == 0 || item.price == 0 ? '0.4' : '1'}">
+    [ngStyle]="{'opacity': item.count == 0 || item.price == 0 ? '0.4' : '1'}">
       <!-- <label class="title">Your cart</label> -->
       <div class="products">
         <div class="cross">
@@ -74,31 +74,31 @@
             <span class="product">{{ item.title.length > 20 ? item.title.substring(0,20)+"..." : item.title }}</span>
           </div>
           <div class="quantity">
-            <button (click)="minus(item.title);" [disabled]="counter == 0">
+            <button (click)="minus(i, item);" [disabled]="item.count == 1">
               <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M20 12L4 12"></path>
               </svg>
             </button>
-            <label>{{counter}}</label>
-            <button (click)="plus(item.title)" [disabled]="counter == 5">
+            <label>{{item.count}}</label>
+            <button (click)="plus(i,item)" [disabled]="item.count == 5">
               <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b" d="M12 4V20M20 12H4"></path>
               </svg>
             </button>
           </div>
           <div class="price-Tag">
-            <label class="price small" (click)="SinglePrice(item.price)">₹{{item.price}}/-</label>
+            <label class="price small">₹{{item.price}}/-</label>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="card coupons" *ngIf="TotalAddedtoCart.length !== 0">
+    <div class="card coupons" *ngIf="TotalAddedtoCart.length !== 0 && this.TotalCost >= 500">
       <label class="title">Apply coupons</label>
       <form class="form">
           <input type="text" placeholder="Apply your coupons here" class="input_field" required>
           <button type="button" class="btn btn-primary" style="font-size: 14px; color:#fff"
-          (click)="CouponCode()" [disabled]="this.couponCodeBar == true">Apply</button>
+          (click)="CouponCode()" [disabled]="couponCodeBar">Apply</button>
       </form>
     </div>
 
@@ -108,7 +108,7 @@
         <span>Your cart subtotal:</span>
         <span>₹{{TotalCost}}/-</span>
         <span>Discount through applied coupons:</span>
-        <span style="color: green; font-weight: 800;"> (-) ₹{{couponValue}}/-</span>
+        <span style="color: green; font-weight: 800;">(-) ₹{{couponValue}}/-</span>
         <span>Shipping fees:</span>
         <span>₹{{ShippingCharges}}/-</span>
       </div>
