@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { cartItemsService } from '../Services/cart-items.service';
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './cart-items.component.html',
   styleUrls: ['./cart-items.component.scss']
 })
-export class CartItemsComponent implements OnInit, OnDestroy {
+export class CartItemsComponent implements OnInit {
 
   cartItems:any;
   starWidth: number = 0;
@@ -33,6 +33,25 @@ export class CartItemsComponent implements OnInit, OnDestroy {
       //this.Condition(this.elementContent);
       this.OnDataLoad();
     })
+  }
+
+  getStarClasses(item: any): string[] {
+    const starList: string[] = [];
+    if (item && item.rating && typeof item.rating.rate === 'number') {
+      const StarRating = item.rating.rate;
+
+      for (let i = 1; i <= 5; i++) {
+        if (i <= StarRating) {
+          starList.push("fas fa-star");
+        } else if (i <= StarRating + 0.5) {
+          starList.push("fas fa-star-half");
+        } else {
+          starList.push("far fa-star");
+        }
+      }
+    }
+
+    return starList;
   }
 
   rateProduct(rateValue: number) {
@@ -77,5 +96,6 @@ OnDataLoad(){
   get isSubMenuOpen(): boolean {
     return this.cartItemsService.sidebarShow;
   }
+
 
 }

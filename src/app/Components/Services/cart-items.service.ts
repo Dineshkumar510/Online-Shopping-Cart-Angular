@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from "rxjs";
+import { ToastService } from './toast.service';
 export interface IProduct {
   id: number;
   title: string;
@@ -32,6 +33,7 @@ export class cartItemsService implements OnDestroy{
 
   constructor(
     private http: HttpClient,
+    private toast:ToastService
     ) {}
 
   getProductItems(params: {category: any}): Observable<IProduct[]>{
@@ -48,6 +50,9 @@ export class cartItemsService implements OnDestroy{
     //Filtering for duplicate Array elements
     if(this.cartItems.find((item)=> item.title === ItemArray.title) === undefined){
       this.cartItems.push(ItemArray);
+      this.toast.openSuccess(`Product : "${item?.title.length > 10 ? item?.title.substring(0,10) + "..." : item?.title}" Added to Cart Successfully`);
+    } else {
+      this.toast.openInfo("Product Already Added to Cart");
     }
   }
 
@@ -61,13 +66,10 @@ export class cartItemsService implements OnDestroy{
       const currentCount = updatedCartItems[index].count;
       if (typeof currentCount === 'number' && !isNaN(currentCount)) {
         updatedCartItems[index].count++;
-        console.log("Incremented product count:", updatedCartItems);
         this.productsSubject.next(updatedCartItems);
       } else {
         console.error("Invalid count for the product at index:", currentCount);
       }
-    } else {
-      console.error("Invalid index provided:", index);
     }
   }
 
@@ -79,8 +81,6 @@ export class cartItemsService implements OnDestroy{
       } else {
         console.error("Invalid count for the product at index:", currentCount);
       }
-    } else {
-      console.error("Invalid index provided:", index);
     }
   }
 

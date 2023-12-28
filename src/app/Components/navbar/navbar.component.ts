@@ -32,9 +32,6 @@ export class NavbarComponent implements OnInit{
     this.OnCardItem();
   }
 
-  reloadPage() {
-    window.location.reload();
- }
 
   OnCardItem(){
     this.TotalAddedtoCart = this.cartItemsService.getCartItems;
