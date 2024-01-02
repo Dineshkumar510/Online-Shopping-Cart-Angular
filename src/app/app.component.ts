@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {cartItemsService} from './Components/Services/cart-items.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'online-shopping-cart-Angular14';
+  ShowPayment:boolean = false;
+
   ngOnInit(): void {
   }
-  constructor(){}
+  constructor(
+    private router: Router,
+    private cartItemsService: cartItemsService,
+  ){
+    this.ShowPayment = this.cartItemsService.IsFinalPrice();
+  }
+
+  isPaymentRoute(): boolean {
+    return this.router.url === '/Payment';
+  }
 
 }

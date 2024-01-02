@@ -26,7 +26,6 @@ export class ToastService {
       sticky:true,
       position: 'topLeft'
     })
-    console.log("Success Toast Called!", successMsg);
 };
 
   openError(errorMsg: any){

@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from "rxjs";
 import { ToastService } from './toast.service';
+import { AppComponent } from "src/app/app.component";
 export interface IProduct {
   id: number;
   title: string;
@@ -23,13 +24,14 @@ interface IRating {
 
 export class cartItemsService implements OnDestroy{
 
-
   private apiUrl = 'https://fakestoreapi.com/products/category';
   cartItems:IProduct[] = [];
   filterItems:[] = [];
   sidebarShow: boolean = true;
 
   private productsSubject = new BehaviorSubject<IProduct[]>(this.cartItems);
+  finalPrice: number;
+  ShowPayment: boolean;
 
   constructor(
     private http: HttpClient,
@@ -50,7 +52,7 @@ export class cartItemsService implements OnDestroy{
     //Filtering for duplicate Array elements
     if(this.cartItems.find((item)=> item.title === ItemArray.title) === undefined){
       this.cartItems.push(ItemArray);
-      this.toast.openSuccess(`Product : "${item?.title.length > 10 ? item?.title.substring(0,10) + "..." : item?.title}" Added to Cart Successfully`);
+      this.toast.openSuccess(`Product : "${item?.title.length > 15 ? item?.title.substring(0,15) + "..." : item?.title}" Added to Cart Successfully`);
     } else {
       this.toast.openInfo("Product Already Added to Cart");
     }
@@ -84,13 +86,25 @@ export class cartItemsService implements OnDestroy{
     }
   }
 
+  setFinalPrice(price: number) {
+    this.finalPrice = price;
+    this.IsFinalPrice();
+  }
+
+  getFinalPrice(): number {
+    return this.finalPrice;
+  }
 
   ShoppingCartToggle(){
     this.sidebarShow = !this.sidebarShow;
   }
 
+  IsFinalPrice(){
+    return this.finalPrice > 1 ? false : true;
+   }
+
   ngOnDestroy(): void {
-   this.productsSubject.unsubscribe()
+   this.productsSubject.unsubscribe();
   }
 
 }

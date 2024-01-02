@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { loaderComponent } from './Components/loader/loader.component';
+import { RazorPaymentComponent } from './Components/razor-payment/razor-payment.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { loaderComponent } from './Components/loader/loader.component';
     AppComponent,
     CartItemsComponent,
     NavbarComponent,
+    RazorPaymentComponent,
   ],
   imports: [
     BrowserModule,

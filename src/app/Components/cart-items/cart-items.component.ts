@@ -78,7 +78,6 @@ OnDataLoad(){
       const data = response.map(
         (item, index) => ({...item, count: 1})
       )
-      console.log(data);
       this.cartItems = data;
     }
   );

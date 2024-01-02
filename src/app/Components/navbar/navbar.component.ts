@@ -20,8 +20,6 @@ export class NavbarComponent implements OnInit{
   totalPrice:any;
   couponCodeBar:boolean = false;
   couponValue:any = 0;
-  //ShippingCharges:any = 0;
-  //sidebarShow: boolean;
 
   constructor(
     private router: Router,
@@ -124,16 +122,18 @@ export class NavbarComponent implements OnInit{
     return Math.round(this.TotalCost + this.ShippingCharges + this.IncrementValue - this.couponValue - this.DecrementValue);
   }
 
+  updateFinalPrice() {
+    const finalPrice = this.FinalPrice;
+    this.cartItemsService.setFinalPrice(finalPrice);
+  }
 
   removeEle(i:number){
     this.TotalAddedtoCart.splice(i, 1);
   }
 
-  removeElewithDelay(i:number){
-    setTimeout(()=>{
-      this.TotalAddedtoCart.splice(i, 1);
-    }, 1000)
+  Pay(){
+    this.updateFinalPrice();
+    this.router.navigate(['/Payment']);
+    this.cartItemsService.ShoppingCartToggle();
   }
-
-
 }
