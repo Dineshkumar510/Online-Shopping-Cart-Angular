@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { cartItemsService } from '../Services/cart-items.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './cart-items.component.html',
   styleUrls: ['./cart-items.component.scss']
 })
-export class CartItemsComponent implements OnInit {
+export class CartItemsComponent implements OnInit, AfterViewInit {
 
   cartItems:any;
   starWidth: number = 0;
@@ -18,16 +18,17 @@ export class CartItemsComponent implements OnInit {
 
   private routeSub: Subscription;
   elementContent: any;
-  loading = false;
+  isLoading:boolean = false;
   elementValue: any;
 
   constructor(
     private cartItemsService: cartItemsService,
     private route: ActivatedRoute,
-
-  ) {}
+    private cdr: ChangeDetectorRef,
+    ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.routeSub = this.route.params.subscribe(params => {
       this.elementContent = params['element'];
       //this.Condition(this.elementContent);
@@ -35,11 +36,26 @@ export class CartItemsComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit() {
+    this.isLoading = false;
+    this.cdr.detectChanges();
+}
+
+  OnDataLoad(){
+      this.cartItemsService.getProductItems({ category: this.elementContent }).subscribe(
+        (response) => {
+          const data = response.map(
+            (item, index) => ({...item, count: 1})
+          )
+          this.cartItems = data;
+        }
+      );
+  }
+
   getStarClasses(item: any): string[] {
     const starList: string[] = [];
     if (item && item.rating && typeof item.rating.rate === 'number') {
       const StarRating = item.rating.rate;
-
       for (let i = 1; i <= 5; i++) {
         if (i <= StarRating) {
           starList.push("fas fa-star");
@@ -50,7 +66,6 @@ export class CartItemsComponent implements OnInit {
         }
       }
     }
-
     return starList;
   }
 
@@ -71,18 +86,6 @@ export class CartItemsComponent implements OnInit {
 //   }
 // }
 
-OnDataLoad(){
-  this.loading = true;
-  this.cartItemsService.getProductItems({ category: this.elementContent }).subscribe(
-    (response) => {
-      const data = response.map(
-        (item, index) => ({...item, count: 1})
-      )
-      this.cartItems = data;
-    }
-  );
-  this.loading = false;
-}
 
   addedToCart(event:any){
    this.cartItemsService.AddtoCart(event);

@@ -1,14 +1,19 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { cartItemsService } from '../Services/cart-items.service';
+import { IProduct, cartItemsService } from '../Services/cart-items.service';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
 
   @ViewChild("priceTag") priceTag: ElementRef;
+  @ViewChild('profile', { static: true }) profile: ElementRef;
+  @ViewChild('menu', { static: true }) menu: ElementRef;
+
+  CartItems$ = this.cartItemsService.getCartItemsObservable();
 
   counter = 1;
   TotalAddedtoCart:any[] = [];
@@ -20,6 +25,8 @@ export class NavbarComponent implements OnInit{
   totalPrice:any;
   couponCodeBar:boolean = false;
   couponValue:any = 0;
+  CouponInput:any;
+  Cart: Subscription;
 
   constructor(
     private router: Router,
@@ -27,14 +34,30 @@ export class NavbarComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    this.OnCardItem();
+    //this.OnCardItem();
+    this.CartItems$.subscribe(cartItems => {
+      this.TotalAddedtoCart = cartItems;
+      if(cartItems?.length <= 0){
+        const taskOutput = JSON.parse(localStorage.getItem('TotalCartItems')!) || [];
+        this.TotalAddedtoCart = taskOutput;
+        this.cartItemsService.LocalStorageValue(this.TotalAddedtoCart);
+      }
+      console.log("From NabBar",this.TotalAddedtoCart);
+    });
   }
 
 
-  OnCardItem(){
-    this.TotalAddedtoCart = this.cartItemsService.getCartItems;
-   }
+  ngAfterViewInit() {
+      this.profile.nativeElement.addEventListener('click', () => {
+      this.menu.nativeElement.classList.toggle('active');
+    });
+  }
 
+
+  // OnCardItem(){
+  //   console.log("Total Kart Items in NavBar",this.cartItemsService.getKartItems);
+  //   this.TotalAddedtoCart = this.CartItems$;
+  //  }
 
   ShoppingCartToggle(event:any){
     if(event){
@@ -51,6 +74,8 @@ export class NavbarComponent implements OnInit{
     return this.Totalprice(this.TotalAddedtoCart)
   }
 
+
+  //Need to get only price Values from the arrays of Object
   Totalprice(array:any[]){
     var totalCost = 0;
     for(var i = 0; i < array.length; i++){
@@ -86,7 +111,7 @@ export class NavbarComponent implements OnInit{
 
 
   get ShippingCharges():number {
-    return this.TotalCost<500 ? 0 : 150;
+    return this.TotalCost<500 ? 150 : 0;
   }
 
   plus(index: number, item:any) {
@@ -122,18 +147,24 @@ export class NavbarComponent implements OnInit{
     return Math.round(this.TotalCost + this.ShippingCharges + this.IncrementValue - this.couponValue - this.DecrementValue);
   }
 
-  updateFinalPrice() {
-    const finalPrice = this.FinalPrice;
-    this.cartItemsService.setFinalPrice(finalPrice);
-  }
-
   removeEle(i:number){
     this.TotalAddedtoCart.splice(i, 1);
+    localStorage.removeItem('TotalCartItems');
   }
 
   Pay(){
     this.updateFinalPrice();
     this.router.navigate(['/Payment']);
     this.cartItemsService.ShoppingCartToggle();
+    this.menu.nativeElement.classList.toggle('active');
+  }
+
+  updateFinalPrice() {
+    const finalPrice = this.FinalPrice;
+    this.cartItemsService.setFinalPrice(finalPrice);
+  }
+
+  ngOnDestroy(): void {
+    this.Cart.unsubscribe();
   }
 }

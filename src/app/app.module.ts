@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { loaderComponent } from './Components/loader/loader.component';
 import { RazorPaymentComponent } from './Components/razor-payment/razor-payment.component';
+import { WindowRef } from 'src/app/Components/razor-payment/WindowRef';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { RazorPaymentComponent } from './Components/razor-payment/razor-payment.
     RazorPaymentComponent,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     NgToastModule,
@@ -30,7 +33,7 @@ import { RazorPaymentComponent } from './Components/razor-payment/razor-payment.
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [cartItemsService],
+  providers: [cartItemsService, WindowRef],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

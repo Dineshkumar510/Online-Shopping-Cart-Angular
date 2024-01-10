@@ -1,9 +1,12 @@
 
 <div class="container my-4" [ngClass]="{'blur cursorNull': !isSubMenuOpen}">
   <div class="row">
-      <div class="col-md-12 mb-3">
+      <div class="col-md-12 mb-3" *ngIf="elementContent !== 'Payment'">
         <h5>{{elementContent | uppercase}}</h5>
-  </div>
+      </div>
+      <div class="col-md-12 mb-3" *ngIf="elementContent == 'Payment'">
+        <h5></h5>
+      </div>
   </div>
 
     <div class="row">
@@ -34,7 +37,7 @@
           </div>
         </div>
       </div>
-      <div class="loading" *ngIf="loading">
+      <div class="loading" *ngIf="isLoading">
         <app-loader></app-loader>
       </div>
     </div>
