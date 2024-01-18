@@ -17,21 +17,25 @@ declare var Razorpay:any;
 export class RazorPaymentComponent implements OnInit {
   element: any;
   finalPrice: number;
-  ShowPrice: boolean;
+  ShowPrice: boolean = true;
+  Congrats: boolean = false;
 
   constructor(
     private router: Router,
     private CartService: cartItemsService,
-    private winRef: WindowRef
+    private winRef: WindowRef,
   ) {}
 
   ngOnInit(): void {
-    this.ShowPrice = this.CartService.IsFinalPrice();
     this.LoadValues();
   }
 
   LoadValues(){
-    this.finalPrice = this.CartService.getFinalPrice();
+    const FinalPrice:any= localStorage.getItem("FinalPrice");
+    const FinalpaymentPrice:any = JSON.parse(FinalPrice);
+    this.finalPrice = FinalpaymentPrice;
+    //this.finalPrice = this.CartService.getFinalPrice();
+    console.log("Final Price in New Tab:", this.finalPrice);
   }
 
   shootConfetti() {
@@ -54,8 +58,13 @@ export class RazorPaymentComponent implements OnInit {
       amount: this.finalPrice * 100,
       key: 'rzp_test_cXsS8lBOEB4kZt',
       image: 'https://cdn-icons-png.flaticon.com/512/743/743131.png',
-      handler: function(response:any){
-        alert(response.razorpay_payment_id);
+      handler: (response:any) => {
+        this.shootConfetti();
+        this.Congrats = true;
+        this.ShowPrice = false;
+        localStorage.removeItem('TotalCartItems');
+        localStorage.removeItem('FinalPrice');
+        location.reload();
       },
       prefill:{
         name: 'Dinesh kumar Boddepalli',
@@ -78,16 +87,13 @@ export class RazorPaymentComponent implements OnInit {
     const failureCallback = (error:any) => {
       console.log(error);
     }
-
     Razorpay.open(RazorpayOptions, successCallBack, failureCallback);
-
-    this.Redirect();
   }
 
+
   Redirect(){
-    setTimeout(() => {
-      this.router.navigate(['/electronics']);
-    }, 5000);
+    this.router.navigate(['/electronics']);
+    window.close();
   }
 
 

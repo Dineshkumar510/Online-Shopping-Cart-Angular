@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'online-shopping-cart-Angular14';
-  ShowPayment:boolean = false;
+  ShowPayment:boolean;
 
   ngOnInit(): void {
   }
@@ -18,10 +18,11 @@ export class AppComponent implements OnInit {
     private cartItemsService: cartItemsService,
   ){
     this.ShowPayment = this.cartItemsService.IsFinalPrice();
+    console.log("Show boolean for Main Component!",this.ShowPayment);
   }
 
   isPaymentRoute(): boolean {
-    return this.router.url === '/Payment';
+    return this.router.url === '/Payment' && this.ShowPayment == true;
   }
 
 }

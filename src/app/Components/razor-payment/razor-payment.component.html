@@ -1,25 +1,41 @@
 
-<div class="container" *ngIf="ShowPrice else EmptyKart">
-    <div class="row">
+<div class="container">
+
+    <div class="row" *ngIf="finalPrice > 0">
         <div class="col-md-12">
             <div class="Main-Data">
                 <h5>The total cost of the Items is <b>₹{{finalPrice}}/-</b>,
                   Please <a href="javascript:void(0)" (click)="PaymentMethod()">Click here</a> to Proceed</h5>
             </div>
-              <div>
+              <!-- <div>
                 <button (click)="shootConfetti()">Shoot Confetti</button>
-              </div>
+              </div> -->
         </div>
     </div>
-</div>
 
-
-<ng-template #EmptyKart>
-  <div class="row">
+    <div class="row" *ngIf="finalPrice < 0">
       <div class="col-md-12">
           <div class="Main-Data">
               <h2>Please add Some thing to the Cart & Check Again!</h2>
           </div>
       </div>
   </div>
-</ng-template>
+
+    <div class="row" *ngIf="Congrats">
+      <div class="col-md-12">
+          <div class="Main-Data">
+              <div class="main-heading">
+                <h2>Congratulations, Payment was Successfull & Your order has been placed</h2>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-12">
+        <div class="sub-data Main-Data">
+          <span>Now, you can redirect to <a href="javascript:void(0)" (click)="Redirect()">Main Page</a></span>
+        </div>
+      </div>
+  </div>
+
+
+</div>
+

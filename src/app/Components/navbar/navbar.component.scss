@@ -63,6 +63,7 @@
   background-color: #e5e5e5;
   transform: translateX(234%);
   transition: 400ms transform;
+  border-radius: 20px 0px 0px 20px;
   width: 30%;
   -webkit-transform: translateX(234%);
   -moz-transform: translateX(234%);
@@ -75,6 +76,13 @@
   -moz-transition: 400ms transform;
   -ms-transition: 400ms transform;
   -o-transition: 400ms transform;
+  -webkit-border-radius: 20px 0px 0px 20px;
+  border-radius: 20px 0px 0px 20px;
+  -moz-border-radius: 20px 0px 0px 20px;
+  border-radius: 20px 0px 0px 20px;
+  -ms-border-radius: 20px 0px 0px 20px;
+  border-radius: 20px 0px 0px 20px;
+  -o-border-radius: 20px 0px 0px 20px;
 }
 
 .sidebar-slider.sidebar-slide-in {

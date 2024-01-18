@@ -150,11 +150,12 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   removeEle(i:number){
     this.TotalAddedtoCart.splice(i, 1);
     localStorage.removeItem('TotalCartItems');
+    localStorage.removeItem('FinalPrice');
   }
 
   Pay(){
     this.updateFinalPrice();
-    this.router.navigate(['/Payment']);
+    // this.router.navigate(['/Payment']);
     this.cartItemsService.ShoppingCartToggle();
     this.menu.nativeElement.classList.toggle('active');
   }
@@ -163,6 +164,13 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
     const finalPrice = this.FinalPrice;
     this.cartItemsService.setFinalPrice(finalPrice);
   }
+
+  shareBtn(){
+    //this.toast.openInfo();
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`Payment`]));
+      window.open(url, '_blank');
+   }
 
   ngOnDestroy(): void {
     this.Cart.unsubscribe();

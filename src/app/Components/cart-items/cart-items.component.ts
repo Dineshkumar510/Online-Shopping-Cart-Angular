@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { cartItemsService } from '../Services/cart-items.service';
-import { AfterViewInit, Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './cart-items.component.html',
   styleUrls: ['./cart-items.component.scss']
 })
-export class CartItemsComponent implements OnInit, AfterViewInit {
+export class CartItemsComponent implements OnInit {
 
   cartItems:any;
   starWidth: number = 0;
@@ -24,11 +24,9 @@ export class CartItemsComponent implements OnInit, AfterViewInit {
   constructor(
     private cartItemsService: cartItemsService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
     ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.routeSub = this.route.params.subscribe(params => {
       this.elementContent = params['element'];
       //this.Condition(this.elementContent);
@@ -36,12 +34,10 @@ export class CartItemsComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit() {
-    this.isLoading = false;
-    this.cdr.detectChanges();
-}
+
 
   OnDataLoad(){
+    this.isLoading = true;
       this.cartItemsService.getProductItems({ category: this.elementContent }).subscribe(
         (response) => {
           const data = response.map(
@@ -50,6 +46,7 @@ export class CartItemsComponent implements OnInit, AfterViewInit {
           this.cartItems = data;
         }
       );
+      this.isLoading = false;
   }
 
   getStarClasses(item: any): string[] {

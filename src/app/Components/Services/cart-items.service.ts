@@ -2,7 +2,6 @@ import { Injectable, OnDestroy, OnInit } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from "rxjs";
 import { ToastService } from './toast.service';
-import { AppComponent } from "src/app/app.component";
 export interface IProduct {
   id: number;
   title: string;
@@ -130,8 +129,13 @@ export class cartItemsService implements OnInit, OnDestroy{
   }
 
   setFinalPrice(price: number) {
-    this.finalPrice = price;
+   if(price){
+    localStorage.setItem("FinalPrice", JSON.stringify(price));
+    const FinalPrice:any= localStorage.getItem("FinalPrice");
+    const FinalpaymentPrice:any = JSON.parse(FinalPrice);
+    this.finalPrice = FinalpaymentPrice;
     this.IsFinalPrice();
+   }
   }
 
   getFinalPrice(): number {
@@ -143,7 +147,8 @@ export class cartItemsService implements OnInit, OnDestroy{
   }
 
   IsFinalPrice():boolean{
-    return this.finalPrice > 1 ? true : false;
+    console.log("Final Price from Service:", this.finalPrice);
+    return this.finalPrice >= 1 ? false : true;
    }
 
   ngOnDestroy(): void {
