@@ -13,6 +13,8 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { loaderComponent } from './Components/loader/loader.component';
 import { RazorPaymentComponent } from './Components/razor-payment/razor-payment.component';
 import { WindowRef } from 'src/app/Components/razor-payment/WindowRef';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { WindowRef } from 'src/app/Components/razor-payment/WindowRef';
   ],
   imports: [
     FormsModule,
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     NgToastModule,

@@ -47,6 +47,7 @@ export class cartItemsService implements OnInit, OnDestroy{
 
     ngOnInit(): void {
       this.LocalStorageValue;
+      localStorage.setItem("IncStack", JSON.stringify(this.productsSubject.value));
     }
 
   getProductItems(params: {category: any}): Observable<IProduct[]>{
@@ -116,15 +117,19 @@ export class cartItemsService implements OnInit, OnDestroy{
         updatedCartItems[index].count++;
         this.productsSubject.next(updatedCartItems);
       }
+      localStorage.setItem("IncStack", JSON.stringify(this.productsSubject.value));
     }
   }
 
   DecrementCount(index: number): void {
-    if (index >= 0 && index < this.InCreDeCreValue.length) {
-      const currentCount = this.InCreDeCreValue[index].count;
+    const DecrementCartItems = [...this.InCreDeCreValue];
+    if (index >= 0 && index < DecrementCartItems.length) {
+      const currentCount = DecrementCartItems[index].count;
       if (typeof currentCount === 'number' && !isNaN(currentCount)) {
-        this.InCreDeCreValue[index].count--;
+        DecrementCartItems[index].count--;
+        this.productsSubject.next(DecrementCartItems);
       }
+      localStorage.setItem("IncStack", JSON.stringify(this.productsSubject.value));
     }
   }
 

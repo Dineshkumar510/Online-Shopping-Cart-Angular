@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { cartItemsService } from '../Services/cart-items.service';
 import confetti from 'canvas-confetti';
@@ -15,27 +15,35 @@ declare var Razorpay:any;
 })
 
 export class RazorPaymentComponent implements OnInit {
+
+  @ViewChild('activeDropdown', { static: true }) activeDropdown: ElementRef<any>;
+
+  //activeDropdown: HTMLElement | null;
   element: any;
   finalPrice: number;
-  ShowPrice: boolean = true;
+  ShowPrice: boolean;
   Congrats: boolean = false;
+  TotalAddedtoCart:any[] = [];
 
   constructor(
     private router: Router,
     private CartService: cartItemsService,
     private winRef: WindowRef,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
+    const taskOutput = JSON.parse(localStorage.getItem('IncStack')!) || [];
+    this.TotalAddedtoCart = taskOutput;
     this.LoadValues();
   }
+
+
 
   LoadValues(){
     const FinalPrice:any= localStorage.getItem("FinalPrice");
     const FinalpaymentPrice:any = JSON.parse(FinalPrice);
     this.finalPrice = FinalpaymentPrice;
-    //this.finalPrice = this.CartService.getFinalPrice();
-    console.log("Final Price in New Tab:", this.finalPrice);
   }
 
   shootConfetti() {
@@ -46,6 +54,16 @@ export class RazorPaymentComponent implements OnInit {
       spread: 140,
       origin: { y: 0.8 }
     });
+  }
+
+  get showPrice():boolean{
+    return this.ShowPrice = false;
+  }
+
+  response(){
+    this.showPrice;
+    localStorage.clear();
+    location.reload();
   }
 
   PaymentMethod(){
@@ -59,12 +77,10 @@ export class RazorPaymentComponent implements OnInit {
       key: 'rzp_test_cXsS8lBOEB4kZt',
       image: 'https://cdn-icons-png.flaticon.com/512/743/743131.png',
       handler: (response:any) => {
-        this.shootConfetti();
-        this.Congrats = true;
-        this.ShowPrice = false;
-        localStorage.removeItem('TotalCartItems');
-        localStorage.removeItem('FinalPrice');
-        location.reload();
+        if(response){
+          this.shootConfetti();
+          this.response();
+        }
       },
       prefill:{
         name: 'Dinesh kumar Boddepalli',

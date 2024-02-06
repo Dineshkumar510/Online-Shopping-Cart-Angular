@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'online-shopping-cart-Angular14';
-  ShowPayment:boolean;
+  ShowPayment:boolean = false;
 
   ngOnInit(): void {
   }

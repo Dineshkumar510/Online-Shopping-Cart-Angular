@@ -12,11 +12,18 @@
 .count{
   padding: 3px;
   border-radius: 15px;
-  position: fixed;
-  right: 1.3%;
+  position: absolute;
+  right: 0.6%;
   color: #fff;
   background: red;
-  top: 2.6%;
+  top: 17%;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  z-index: 1;
 }
 
 .logout{
@@ -429,20 +436,6 @@ button:disabled {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* menu toggle */
 
 .menu-toggle {
@@ -501,6 +494,7 @@ button:disabled {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #fff;
 }
 
 .profile .img-box img {
@@ -516,7 +510,7 @@ button:disabled {
 
 .menu {
   position: absolute;
-  top: calc(100% + 24px);
+  top: calc(100% + 16px);
   right: 16px;
   width: 180px;
   min-height: 100px;

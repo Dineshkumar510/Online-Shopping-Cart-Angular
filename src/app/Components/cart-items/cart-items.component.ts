@@ -20,6 +20,7 @@ export class CartItemsComponent implements OnInit {
   elementContent: any;
   isLoading:boolean = false;
   elementValue: any;
+  Math: Math;
 
   constructor(
     private cartItemsService: cartItemsService,

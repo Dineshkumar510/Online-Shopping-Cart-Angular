@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { IProduct, cartItemsService } from '../Services/cart-items.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
+export class NavbarComponent implements OnInit, OnDestroy{
 
   @ViewChild("priceTag") priceTag: ElementRef;
   @ViewChild('profile', { static: true }) profile: ElementRef;
@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   elementPrice:any;
   totalPrice:any;
   couponCodeBar:boolean = false;
+  isActive: boolean = false;
   couponValue:any = 0;
   CouponInput:any;
   Cart: Subscription;
@@ -46,14 +47,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
     });
   }
 
-
-  ngAfterViewInit() {
-      this.profile.nativeElement.addEventListener('click', () => {
-      this.menu.nativeElement.classList.toggle('active');
-    });
-  }
-
-
   // OnCardItem(){
   //   console.log("Total Kart Items in NavBar",this.cartItemsService.getKartItems);
   //   this.TotalAddedtoCart = this.CartItems$;
@@ -64,6 +57,10 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
       event.stopPropagation();
       this.cartItemsService.ShoppingCartToggle();
     }
+  }
+
+  toggleActive() {
+    this.isActive = !this.isActive;
   }
 
   get isSubMenuOpen(): boolean {
@@ -94,7 +91,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
 
   CouponCode(){
     this.couponCodeBar = !this.couponCodeBar;
-    if(this.couponCodeBar == true && this.TotalCost >= 500){
+    if(this.couponCodeBar == true && this.FinalPrice >= 1000){
       this.couponValue = 100;
     } else{
       this.couponValue = 0;
@@ -157,7 +154,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
     this.updateFinalPrice();
     // this.router.navigate(['/Payment']);
     this.cartItemsService.ShoppingCartToggle();
-    this.menu.nativeElement.classList.toggle('active');
+    this.isActive = false;
   }
 
   updateFinalPrice() {

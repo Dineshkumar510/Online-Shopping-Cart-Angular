@@ -27,44 +27,38 @@
       <ul class="nav-right">
         <li class="nav-item cart flex">
           <span class="nav-link white" style="transition: 0.5s;">
-            <span class="count white ml-2" *ngIf="TotalAddedtoCart.length >= 1"></span>
+            <span class="count white ml-2" *ngIf="TotalAddedtoCart.length >= 1">
+            <div class="Counter">
+              <span>{{TotalAddedtoCart.length}}</span>
+            </div>
+            </span>
           </span>
         </li>
         <li class="nav-item flex">
-          <!-- <div class="logout">
-            <button class="btn btn-secondary" style="font-size: 14px;">
-              <i class="fa fa-user"></i> Logout
-            </button>
-          </div> -->
-
-            <div class="profile" #profile>
-              <div class="user" style="color: #fff;">
+            <div class="profile">
+              <div class="user" style="color: #fff; cursor: default;">
                 <h4>Katherine Cooper</h4>
                 <p>@probablykat66</p>
               </div>
-              <div class="img-box">
-                <i class="fa fa-user" style="color: #fff;font-size: 18px;"></i>
+              <div class="img-box" (click)="toggleActive()">
+                <i class="fa fa-user" style="color: #000;font-size: 18px;"></i>
               </div>
             </div>
-            <div class="menu" #menu>
+            <div class="menu" [ngClass]="{'active': isActive}">
               <ul>
                 <li>
                     <a href="javascript:void(0)"><i class="fa fa-user"></i>&nbsp;Profile</a>
                 </li>
-
                 <li>
                     <a href="javascript:void(0)" (click)="ShoppingCartToggle($event)">
                       <i class="fa-solid fa-cart-shopping"></i>&nbsp;Cart Items - {{TotalAddedtoCart.length}}
                     </a>
                 </li>
-
                 <li>
                   <a href="javascript:void(0)"><i class="fa fa-sign-out"></i>&nbsp;Sign Out</a>
                 </li>
-
               </ul>
             </div>
-
         </li>
       </ul>
     </div>
@@ -76,7 +70,7 @@
 
 <div class="sidebar-slider" [class.sidebar-slide-in]="isSubMenuOpen">
   <div class="sidebar-close">
-      <span (click)="ShoppingCartToggle($event)">
+      <span (click)="ShoppingCartToggle($event); isActive = false">
           <i class="fa fa-times"></i>
       </span>
   </div>
@@ -111,13 +105,13 @@
             </button>
           </div>
           <div class="price-Tag">
-            <label class="price small">₹{{item?.price}}/-</label>
+            <label class="price small">₹{{item?.price | number: '1.0-0'}}/-</label>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="card coupons" *ngIf="TotalAddedtoCart?.length !== 0 && this.TotalCost >= 500">
+    <div class="card coupons" *ngIf="TotalAddedtoCart?.length !== 0 && this.FinalPrice >= 1000">
       <label class="title">Apply coupons</label>
       <form class="form">
           <input type="text" placeholder="Apply your coupons here" class="input_field" [(ngModel)]="CouponInput" name="CouponValue">
