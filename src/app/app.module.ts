@@ -14,6 +14,8 @@ import { loaderComponent } from './Components/loader/loader.component';
 import { RazorPaymentComponent } from './Components/razor-payment/razor-payment.component';
 import { WindowRef } from 'src/app/Components/razor-payment/WindowRef';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProfileComponent } from './Components/profile/profile.component';
+import { ProductHistoryComponent } from './Components/product-history/product-history.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CartItemsComponent,
     NavbarComponent,
     RazorPaymentComponent,
+    ProfileComponent,
+    ProductHistoryComponent,
   ],
   imports: [
     FormsModule,

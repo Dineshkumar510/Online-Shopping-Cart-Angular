@@ -1,14 +1,15 @@
 <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
+
     <a class="navbar-brand" href=""><i class="fa-solid fa-bag-shopping"></i> Shopping Mart</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav" style="justify-content: start;">
       <ul class="navbar-nav">
-        <!-- <li class="nav-item">
-          <a class="nav-link white" aria-current="page" href="/products">All</a>
-        </li> -->
+        <li class="nav-item">
+          <a class="nav-link white" href="/products">All</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link white" href="/electronics">Electronics</a>
         </li>
@@ -47,7 +48,7 @@
             <div class="menu" [ngClass]="{'active': isActive}">
               <ul>
                 <li>
-                    <a href="javascript:void(0)"><i class="fa fa-user"></i>&nbsp;Profile</a>
+                    <a href="/profile"><i class="fa fa-user"></i>&nbsp;Profile</a>
                 </li>
                 <li>
                     <a href="javascript:void(0)" (click)="ShoppingCartToggle($event)">
@@ -140,7 +141,7 @@
 
     <div class="noItemonCart" *ngIf="TotalAddedtoCart.length == 0">
       <div class="empty-cart">
-        <img class="noItem" src="../../../assets/images/Empty Cart.jpg" alt="emptycart"/>
+        <img class="noItem" src="../../../assets/images/Empty Cart.png" alt="emptycart"/>
       </div>
       <div class="content" style="margin: 1.5rem 2.5rem;">
         <h6><i>No Items in the Cart, Please add some Products</i></h6>

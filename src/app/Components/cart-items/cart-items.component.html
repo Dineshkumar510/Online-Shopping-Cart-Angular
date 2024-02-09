@@ -1,10 +1,14 @@
 
 <div class="container my-4" [ngClass]="{'blur cursorNull': !isSubMenuOpen}">
   <div class="row">
-      <div class="col-md-12 mb-3" *ngIf="elementContent !== 'Payment'">
+      <div class="col-md-12 mb-3" *ngIf="elementContent !== 'products' && elementContent !== 'profile'
+      && elementContent !== 'product-history'">
         <h5>{{elementContent | uppercase}}</h5>
       </div>
-      <div class="col-md-12 mb-3" *ngIf="elementContent == 'Payment'">
+      <div class="col-md-12 mb-3" *ngIf="elementContent == 'products'">
+        <h5>{{"ALL PRODUCTS"}}</h5>
+      </div>
+      <div class="col-md-12 mb-3" *ngIf="elementContent == 'profile'">
         <h5></h5>
       </div>
   </div>

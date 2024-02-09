@@ -38,7 +38,7 @@ export class CartItemsComponent implements OnInit {
 
 
   OnDataLoad(){
-    this.isLoading = true;
+    if(this.elementContent !== 'products'){
       this.cartItemsService.getProductItems({ category: this.elementContent }).subscribe(
         (response) => {
           const data = response.map(
@@ -47,7 +47,16 @@ export class CartItemsComponent implements OnInit {
           this.cartItems = data;
         }
       );
-      this.isLoading = false;
+    } else {
+      this.cartItemsService.getTotalProducts().subscribe(
+        (response) => {
+          const data = response.map(
+            (item, index) => ({...item, count: 1})
+          )
+          this.cartItems = data;
+        }
+      );
+    }
   }
 
   getStarClasses(item: any): string[] {

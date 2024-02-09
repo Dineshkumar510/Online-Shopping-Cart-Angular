@@ -25,6 +25,7 @@ interface IRating {
 export class cartItemsService implements OnInit, OnDestroy{
 
   private apiUrl = 'https://fakestoreapi.com/products/category';
+  private totalUrl = 'https://fakestoreapi.com/products';
   cartItems:IProduct[] = [];
   AllItems:IProduct[] = [];
   passingCartItems:IProduct[] = [];
@@ -49,6 +50,11 @@ export class cartItemsService implements OnInit, OnDestroy{
       this.LocalStorageValue;
       localStorage.setItem("IncStack", JSON.stringify(this.productsSubject.value));
     }
+
+  getTotalProducts():Observable<IProduct[]>{
+    const url = this.totalUrl;
+    return this.http.get<IProduct[]>(url);
+  }
 
   getProductItems(params: {category: any}): Observable<IProduct[]>{
    const {category} = params;

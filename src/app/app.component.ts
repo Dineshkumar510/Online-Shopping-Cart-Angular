@@ -25,4 +25,12 @@ export class AppComponent implements OnInit {
     return this.router.url === '/Payment' && this.ShowPayment == true;
   }
 
+  isProfile():boolean {
+    return this.router.url === '/profile';
+  }
+
+  isHistory():boolean {
+    return this.router.url === '/product-history';
+  }
+
 }

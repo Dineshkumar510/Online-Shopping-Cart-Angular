@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { cartItemsService } from '../Services/cart-items.service';
 import confetti from 'canvas-confetti';
@@ -14,7 +14,7 @@ declare var Razorpay:any;
   styleUrls: ['./razor-payment.component.scss']
 })
 
-export class RazorPaymentComponent implements OnInit {
+export class RazorPaymentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('activeDropdown', { static: true }) activeDropdown: ElementRef<any>;
 
@@ -38,8 +38,6 @@ export class RazorPaymentComponent implements OnInit {
     this.LoadValues();
   }
 
-
-
   LoadValues(){
     const FinalPrice:any= localStorage.getItem("FinalPrice");
     const FinalpaymentPrice:any = JSON.parse(FinalPrice);
@@ -56,16 +54,6 @@ export class RazorPaymentComponent implements OnInit {
     });
   }
 
-  get showPrice():boolean{
-    return this.ShowPrice = false;
-  }
-
-  response(){
-    this.showPrice;
-    localStorage.clear();
-    location.reload();
-  }
-
   PaymentMethod(){
     this.LoadValues();
     const RazorpayOptions = {
@@ -78,8 +66,8 @@ export class RazorPaymentComponent implements OnInit {
       image: 'https://cdn-icons-png.flaticon.com/512/743/743131.png',
       handler: (response:any) => {
         if(response){
-          this.shootConfetti();
-          this.response();
+          localStorage.clear();
+          location.reload();
         }
       },
       prefill:{
@@ -112,6 +100,12 @@ export class RazorPaymentComponent implements OnInit {
     window.close();
   }
 
+
+  ngAfterViewInit(): void {
+    if(this.finalPrice == null){
+      this.shootConfetti();
+    }
+  }
 
 
 }
