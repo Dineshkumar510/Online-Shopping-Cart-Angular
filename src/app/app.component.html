@@ -2,7 +2,5 @@
 <router-outlet></router-outlet>
 <app-profile *ngIf="isProfile()"></app-profile>
 <app-product-history *ngIf="isHistory()"></app-product-history>
-<div *ngIf="isPaymentRoute()">
-  <app-razor-payment></app-razor-payment>
-</div>
+<app-razor-payment *ngIf="isPaymentRoute()"></app-razor-payment>
 <ng-toast></ng-toast>
