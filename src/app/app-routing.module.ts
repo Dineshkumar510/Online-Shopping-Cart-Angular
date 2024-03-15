@@ -6,7 +6,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { ProductHistoryComponent } from './Components/product-history/product-history.component';
 
 const routes: Routes = [
-  {path:'', redirectTo: '/electronics', pathMatch: 'full'},
+  {path:'', redirectTo: '/products', pathMatch: 'full'},
   {path:':element', component: CartItemsComponent},
   {path:'profile', component: ProfileComponent},
   {path:'product-history', component: ProductHistoryComponent},

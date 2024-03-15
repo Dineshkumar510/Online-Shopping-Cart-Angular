@@ -4,7 +4,6 @@ table,th,td {
   border-collapse: collapse;
 }
 
-
 .dropdown{
   display: flex;
   align-items: center;
@@ -15,4 +14,31 @@ table,th,td {
   display: flex;
   justify-content: end;
   width: 100%;
+}
+
+.heading {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+}
+
+.label{
+  width: fit-content;
+  color: #fff;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+
+.status{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button{
+  display: flex;
+  justify-content: end;
 }

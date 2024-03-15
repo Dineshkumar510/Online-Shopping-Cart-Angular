@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/co
 import { Router } from '@angular/router';
 import { IProduct, cartItemsService } from '../Services/cart-items.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { StoredataService } from '../Services/storedata.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
   constructor(
     private router: Router,
     private cartItemsService: cartItemsService,
+    private storeDataService: StoredataService,
   ) { }
 
   ngOnInit(): void {
@@ -146,15 +148,17 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   removeEle(i:number){
     this.TotalAddedtoCart.splice(i, 1);
-    localStorage.removeItem('TotalCartItems');
-    localStorage.removeItem('FinalPrice');
+    this.storeDataService.DeleteData(i);
   }
 
   Pay(){
     this.updateFinalPrice();
-    // this.router.navigate(['/Payment']);
+    this.storeDataService.StoreData();
     this.cartItemsService.ShoppingCartToggle();
     this.isActive = false;
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`Payment`]));
+      window.open(url, '_blank');
   }
 
   updateFinalPrice() {
@@ -162,12 +166,6 @@ export class NavbarComponent implements OnInit, OnDestroy{
     this.cartItemsService.setFinalPrice(finalPrice);
   }
 
-  shareBtn(){
-    //this.toast.openInfo();
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`Payment`]));
-      window.open(url, '_blank');
-   }
 
   ngOnDestroy(): void {
     this.Cart.unsubscribe();

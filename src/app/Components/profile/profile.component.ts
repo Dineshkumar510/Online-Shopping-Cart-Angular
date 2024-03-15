@@ -32,6 +32,10 @@ export class ProfileComponent implements OnInit {
     this.url = null;
   }
 
+  back(){
+    this.router.navigate(['/products']);
+  }
+
   redirect(){
     this.router.navigate(['/product-history']);
   }

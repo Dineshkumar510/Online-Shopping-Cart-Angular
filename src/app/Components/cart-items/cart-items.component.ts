@@ -12,13 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 export class CartItemsComponent implements OnInit {
 
   cartItems:any;
+  searchTerm:any;
   starWidth: number = 0;
   discount = Math.floor(Math.random() * 100);
   aspectdiscount = Math.floor(Math.random() * 1000);
 
   private routeSub: Subscription;
   elementContent: any;
-  isLoading:boolean = false;
+  isLoading:boolean = true;
   elementValue: any;
   Math: Math;
 
@@ -35,25 +36,27 @@ export class CartItemsComponent implements OnInit {
     })
   }
 
-
-
   OnDataLoad(){
     if(this.elementContent !== 'products'){
-      this.cartItemsService.getProductItems({ category: this.elementContent }).subscribe(
+       this.cartItemsService.getProductItems({ category: this.elementContent }).subscribe(
         (response) => {
+          this.isLoading = true;
           const data = response.map(
             (item, index) => ({...item, count: 1})
           )
           this.cartItems = data;
+          this.isLoading = false;
         }
       );
     } else {
-      this.cartItemsService.getTotalProducts().subscribe(
+       this.cartItemsService.getTotalProducts().subscribe(
         (response) => {
+          this.isLoading = true;
           const data = response.map(
             (item, index) => ({...item, count: 1})
           )
           this.cartItems = data;
+          this.isLoading = false;
         }
       );
     }

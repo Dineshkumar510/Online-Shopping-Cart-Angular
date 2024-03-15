@@ -5,7 +5,7 @@
 
             <label class="hoverable">
               <img [src]="url ? url : '../../../../../assets/images/Profile-men.jpg'">
-              <label class="btn btn-primary hover-text" for="fileInput">
+              <label class="btn btn-secondary hover-text" for="fileInput">
                <i class="fa fa-camera"></i>&nbsp; Edit Profile
               </label>
               <div class="background"></div>
@@ -19,7 +19,8 @@
 
             <div class="product-history mt-3">
                 <button class="btn btn-primary" (click)="redirect()">
-                  View Products History
+                  <i class="fa fa-shopping-cart"></i>&nbsp;
+                  Products History
                 </button>
             </div>
           </div>
@@ -99,7 +100,7 @@
               <div class="mt-4 text-left" style="display: flex; justify-content: end;">
                 <button class="btn btn-outline-success" type="button"
                 style="margin-right: 10px;">Save Profile</button>
-                <button class="btn btn-outline-danger" type="button">Cancel</button>
+                <button class="btn btn-outline-danger" type="button" (click)="back()">Cancel</button>
               </div>
          </div>
 

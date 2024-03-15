@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AppComponent } from './app.component';
 import { CartItemsComponent } from './Components/cart-items/cart-items.component';
 import { cartItemsService } from './Components/Services/cart-items.service';
@@ -16,6 +17,7 @@ import { WindowRef } from 'src/app/Components/razor-payment/WindowRef';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { ProductHistoryComponent } from './Components/product-history/product-history.component';
+import { SearchfilterPipe } from './Components/pipes/searchfilter.pipe';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { ProductHistoryComponent } from './Components/product-history/product-hi
     RazorPaymentComponent,
     ProfileComponent,
     ProductHistoryComponent,
+    SearchfilterPipe,
   ],
   imports: [
     FormsModule,
@@ -36,6 +39,7 @@ import { ProductHistoryComponent } from './Components/product-history/product-hi
     NgToastModule,
     HttpClientModule,
     NgxPaginationModule,
+    NgxSkeletonLoaderModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

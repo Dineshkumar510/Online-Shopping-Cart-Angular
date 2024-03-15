@@ -51,7 +51,7 @@
                     <a href="/profile"><i class="fa fa-user"></i>&nbsp;Profile</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" (click)="ShoppingCartToggle($event)">
+                    <a href="javascript:void(0)" (click)="ShoppingCartToggle($event); isActive = false">
                       <i class="fa-solid fa-cart-shopping"></i>&nbsp;Cart Items - {{TotalAddedtoCart.length}}
                     </a>
                 </li>
@@ -135,7 +135,7 @@
         <label class="price">₹{{FinalPrice}}/-</label>
         <!-- <button class="checkout-btn">Checkout</button> -->
         <button class="btn btn-primary" style="font-size: 14px; color:#fff"
-        (click)="Pay(); shareBtn()">Pay Now</button>
+        (click)="Pay()">Pay Now</button>
       </div>
     </div>
 

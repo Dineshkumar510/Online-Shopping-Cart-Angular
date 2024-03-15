@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { cartItemsService } from '../Services/cart-items.service';
 import confetti from 'canvas-confetti';
 import { WindowRef } from './WindowRef';
+import { StoredataService } from '../Services/storedata.service';
 
 
 //Razorpay imported via CDN;
@@ -29,13 +30,23 @@ export class RazorPaymentComponent implements OnInit, AfterViewInit {
     private router: Router,
     private CartService: cartItemsService,
     private winRef: WindowRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private StoredataService: StoredataService,
   ) {}
 
   ngOnInit(): void {
-    const taskOutput = JSON.parse(localStorage.getItem('IncStack')!) || [];
-    this.TotalAddedtoCart = taskOutput;
+    //const taskOutput = JSON.parse(localStorage.getItem('IncStack')!) || [];
+    //this.TotalAddedtoCart = taskOutput;
     this.LoadValues();
+    this.fetchData();
+  }
+
+  fetchData(){
+    this.StoredataService.fetchData().subscribe(
+      (data)=> {
+        this.TotalAddedtoCart = data;
+      }
+    )
   }
 
   LoadValues(){

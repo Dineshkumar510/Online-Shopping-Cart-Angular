@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -25,7 +25,8 @@
     "canvas-confetti": "^1.9.2",
     "ng-angular-popup": "^0.4.7",
     "ngx-pagination": "^6.0.3",
-    "razorpay": "^2.9.2",
+    "ngx-skeleton-loader": "^1.2.6",
+    "razorpay": "^0.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
