@@ -37,16 +37,19 @@ export class NavbarComponent implements OnInit, OnDestroy{
   ) { }
 
   ngOnInit(): void {
-    //this.OnCardItem();
-    this.CartItems$.subscribe(cartItems => {
-      this.TotalAddedtoCart = cartItems;
-      if(cartItems?.length <= 0){
-        const taskOutput = JSON.parse(localStorage.getItem('TotalCartItems')!) || [];
-        this.TotalAddedtoCart = taskOutput;
-        this.cartItemsService.LocalStorageValue(this.TotalAddedtoCart);
-      }
-      console.log("From NabBar",this.TotalAddedtoCart);
-    });
+    if (this.CartItems$) {
+      this.CartItems$.subscribe(cartItems => {
+        if (!cartItems || cartItems.length === 0) {
+          var storedCartItems = JSON.parse(localStorage.getItem('IncStack') || '[]');
+          this.TotalAddedtoCart = storedCartItems;
+          this.cartItemsService.LocalStorageValue(this.TotalAddedtoCart);
+        } else {
+          this.TotalAddedtoCart = cartItems;
+        }
+        console.log("From NavBar", this.TotalAddedtoCart);
+      });
+    }
+
   }
 
   // OnCardItem(){
@@ -146,14 +149,16 @@ export class NavbarComponent implements OnInit, OnDestroy{
     return Math.round(this.TotalCost + this.ShippingCharges + this.IncrementValue - this.couponValue - this.DecrementValue);
   }
 
-  removeEle(i:number){
+  removeEle(item:any, i:number){
     this.TotalAddedtoCart.splice(i, 1);
-    this.storeDataService.DeleteData(i);
+    this.storeDataService.DeleteData(item);
+    let FinalCartItems = this.TotalAddedtoCart;
+    localStorage.setItem('IncStack', JSON.stringify(FinalCartItems));
   }
 
   Pay(){
     this.updateFinalPrice();
-    this.storeDataService.StoreData();
+    //this.storeDataService.StoreData();
     this.cartItemsService.ShoppingCartToggle();
     this.isActive = false;
     const url = this.router.serializeUrl(

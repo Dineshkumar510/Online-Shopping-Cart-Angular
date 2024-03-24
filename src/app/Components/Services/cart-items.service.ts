@@ -70,8 +70,8 @@ export class cartItemsService implements OnInit, OnDestroy{
     //Filtering for duplicate Array elements
     if(this.cartItems.find((item)=> item.title === ItemArray.title) === undefined){
       this.cartItems.push(ItemArray);
-      localStorage.setItem('TotalCartItems', JSON.stringify(this.cartItems));
-      this.filterItems = JSON.parse(localStorage.getItem('TotalCartItems')!) || [];
+      localStorage.setItem('IncStack', JSON.stringify(this.cartItems));
+      this.filterItems = JSON.parse(localStorage.getItem('IncStack')!) || [];
       this.cartItemsSubject.next(this.getPastCartItems);
       this.toast.openSuccess(`Product : "${item?.title.length > 15 ? item?.title.substring(0,15) + "..." : item?.title}" Added to Cart Successfully`);
     } else {

@@ -1,4 +1,4 @@
-<div class="container card p-3">
+<div class="container card p-3 mb-4">
 
   <div class="row">
       <div class="col-md-6">
@@ -15,11 +15,11 @@
   </div>
 
     <div class="row">
-      <div class="col-md-12" style="max-height: 510px; overflow: auto">
+      <div class="col-md-12" style="max-height: 450px; overflow: auto" *ngIf="FinalProductsHistory">
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Product ID</th>
+              <th class="text-center">Product ID</th>
               <th class="text-center">Product Name</th>
               <th class="text-center">Price</th>
               <th class="text-center">Date</th>
@@ -27,32 +27,40 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let country of countries">
-              <td>{{country.id}}</td>
-              <td class="text-center">
-                <img
-                  [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-                  class="me-2"
-                  style="width: 20px"
-                />
-                {{ country.name }}
-              </td>
-              <td class="text-center">{{ country.area | number}}</td>
-              <td class="text-center">{{ country.population | number }}</td>
-              <td class="text-center">
-                <div class="status">
-                  <div class="label label-success" style="padding:5px 10px"
-                  [ngStyle]="{'background-color':getStatus(country.status)}">
-                  {{country.status}}
+            <ng-container *ngFor="let group of FinalProductsHistory | keyvalue">
+              <tr *ngFor="let data of group.value">
+                <td class="text-center">{{data.Id}}</td>
+                <td class="text-left">
+                  <img
+                    [src]="data.image" class="me-2" style="width: 30px"
+                  />&nbsp;&nbsp;{{data.title}}
+                </td>
+                <td class="text-center">₹{{ data?.price | number: '1.0-0'}}/-</td>
+                <td class="text-center">{{ data.time | date }}</td>
+                <td class="text-center">
+                  <div class="status">
+                    <div class="label label-success" style="padding:5px 10px;"
+                    [ngStyle]="{'background-color':getStatus(data.Status)}">
+                    {{data.Status}}
+                    </div>
                   </div>
-                </div>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            </ng-container>
+
           </tbody>
         </table>
       </div>
 
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="!FinalProductsHistory">
+          <div class="status">
+            <div class="img">
+              <img class="img" src="../../../assets/images/NoData.png" style="width: 300px;">
+            </div>
+          </div>
+      </div>
+
+      <div class="col-md-12" *ngIf="FinalProductsHistory">
         <div class="d-flex p-2">
 
          <div class="dropdown" style="width: auto;">
@@ -72,6 +80,7 @@
             [rotate]="true"
             [maxSize]="3"
             (pageChange)="refreshCountries()">
+            <!---->
             </ngb-pagination>
           </div>
 

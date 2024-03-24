@@ -35,19 +35,19 @@ export class RazorPaymentComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    //const taskOutput = JSON.parse(localStorage.getItem('IncStack')!) || [];
-    //this.TotalAddedtoCart = taskOutput;
+    const taskOutput = JSON.parse(localStorage.getItem('IncStack')!) || [];
+    this.TotalAddedtoCart = taskOutput;
     this.LoadValues();
-    this.fetchData();
+    //this.fetchData();
   }
 
-  fetchData(){
-    this.StoredataService.fetchData().subscribe(
-      (data)=> {
-        this.TotalAddedtoCart = data;
-      }
-    )
-  }
+  // fetchData(){
+  //   this.StoredataService.fetchData().subscribe(
+  //     (data)=> {
+  //       this.TotalAddedtoCart = data;
+  //     }
+  //   )
+  // }
 
   LoadValues(){
     const FinalPrice:any= localStorage.getItem("FinalPrice");
@@ -77,8 +77,15 @@ export class RazorPaymentComponent implements OnInit, AfterViewInit {
       image: 'https://cdn-icons-png.flaticon.com/512/743/743131.png',
       handler: (response:any) => {
         if(response){
+          this.StoredataService.storeData();
           localStorage.clear();
-          location.reload();
+          function reloadPage() {
+            window.location.reload();
+          }
+          const reloadInterval = 1 * 20 * 50;
+          setTimeout(function() {
+            reloadPage(); // Reload the page
+        }, reloadInterval);
         }
       },
       prefill:{
