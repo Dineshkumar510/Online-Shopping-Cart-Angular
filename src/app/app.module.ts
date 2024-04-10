@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { ProductHistoryComponent } from './Components/product-history/product-history.component';
 import { SearchfilterPipe } from './Components/pipes/searchfilter.pipe';
+import { UserloginComponent } from './Components/userlogin/userlogin.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { SearchfilterPipe } from './Components/pipes/searchfilter.pipe';
     ProfileComponent,
     ProductHistoryComponent,
     SearchfilterPipe,
+    UserloginComponent,
   ],
   imports: [
     FormsModule,

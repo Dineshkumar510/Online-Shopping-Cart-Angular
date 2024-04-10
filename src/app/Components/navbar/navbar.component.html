@@ -8,19 +8,19 @@
     <div class="collapse navbar-collapse" id="navbarNav" style="justify-content: start;">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link white" href="/products">All</a>
+          <a class="nav-link white" routerLink="/products">All</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link white" href="/electronics">Electronics</a>
+          <a class="nav-link white" routerLink="/electronics">Electronics</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link white" href="/men's clothing">Clothes</a>
+          <a class="nav-link white" routerLink="/men's clothing">Clothes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link white" href="/women's clothing">Sarees</a>
+          <a class="nav-link white" routerLink="/women's clothing">Sarees</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link white" href="/jewelery">Others</a>
+          <a class="nav-link white" routerLink="/jewelery">Others</a>
         </li>
       </ul>
     </div>
@@ -48,7 +48,7 @@
             <div class="menu" [ngClass]="{'active': isActive}">
               <ul>
                 <li>
-                    <a href="/profile"><i class="fa fa-user"></i>&nbsp;Profile</a>
+                    <a routerLink="/profile"><i class="fa fa-user"></i>&nbsp;Profile</a>
                 </li>
                 <li>
                     <a href="javascript:void(0)" (click)="ShoppingCartToggle($event); isActive = false">

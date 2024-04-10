@@ -4,9 +4,11 @@ import {CartItemsComponent} from './Components/cart-items/cart-items.component'
 import {RazorPaymentComponent} from './Components/razor-payment/razor-payment.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { ProductHistoryComponent } from './Components/product-history/product-history.component';
+import {UserloginComponent} from './Components/userlogin/userlogin.component';
 
 const routes: Routes = [
   {path:'', redirectTo: '/products', pathMatch: 'full'},
+  {path: 'login', component: UserloginComponent},
   {path:':element', component: CartItemsComponent},
   {path:'profile', component: ProfileComponent},
   {path:'product-history', component: ProductHistoryComponent},
